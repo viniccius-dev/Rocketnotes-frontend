@@ -1,5 +1,5 @@
 //import { Fragment } from "react"; //O mesmo que '<> </>'
-import { Container, Links } from './styles';
+import { Container, Links, Content } from './styles';
 
 import { Tag } from '../../components/Tag';
 import { Button } from '../../components/Button';
@@ -13,21 +13,33 @@ export function Details() {
     <Container>
       <Header />
 
-      <ButtonText title="Excluir note"/>
+      <main>
+        <Content>
 
-      <Section title="Links úteis">
-        <Links>
-          <li><a href="#">https://www.rocketseat.com.br/</a></li>          
-          <li><a href="#">https://www.rocketseat.com.br/</a></li>          
-        </Links>
-      </Section>
+          <ButtonText title="Excluir nota"/>
 
-      <Section title="Marcadores">
-        <Tag title="express"/>
-        <Tag title="nodejs"/>
-      </Section>
+          <h1>
+            Introdução ao React
+          </h1>
 
-      <Button title="Voltar"/>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia porttitor nibh. Nam maximus ut lectus vel varius. Nunc lectus nulla, condimentum quis cursus nec, luctus vel tortor. Morbi rutrum, tellus et malesuada pulvinar, mi est accumsan magna, scelerisque scelerisque lectus lectus ac enim. Fusce feugiat risus non nisl lacinia vulputate. Fusce vehicula lacinia congue. Nam elementum quam sit amet odio lobortis, at vehicula ex imperdiet.</p>
+
+          <Section title="Links úteis">
+            <Links>
+              <li><a href="#">https://www.rocketseat.com.br/</a></li>          
+              <li><a href="#">https://www.rocketseat.com.br/</a></li>          
+            </Links>
+          </Section>
+
+          <Section title="Marcadores">
+            <Tag title="express"/>
+            <Tag title="nodejs"/>
+          </Section>
+
+          <Button title="Voltar"/>
+      
+        </Content>
+      </main>
     </Container>
   )
 }
