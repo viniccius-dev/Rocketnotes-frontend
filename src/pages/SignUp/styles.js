@@ -32,7 +32,7 @@ export const Form = styled.form`
     }
 
     > a {
-        margin-top: 80px;
+        margin-top: 50px;
         color: ${({ theme }) => theme.COLORS.ORANGE};
     }
 `;
