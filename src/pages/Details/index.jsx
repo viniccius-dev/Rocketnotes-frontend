@@ -1,5 +1,9 @@
 //import { Fragment } from "react"; //O mesmo que '<> </>'
 import { Container, Links, Content } from './styles';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
+import { api } from '../../services/api';
 
 import { Tag } from '../../components/Tag';
 import { Button } from '../../components/Button';
@@ -8,38 +12,87 @@ import { Section } from '../../components/Section';
 import { ButtonText } from '../../components/ButtonText';
 
 export function Details() {
-  // Apenas um elemento pode ser permitido dentro do return
+  const [data, setData] = useState(null);
+  
+  const params = useParams();
+  const navigate = useNavigate();
+
+  function handleBack() {
+    navigate("/");
+  }
+
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`);
+      setData(response.data);
+    }
+
+    fetchNote();
+  }, []);
+
   return(
     <Container>
       <Header />
+      {
+        data &&
+        <main>
+          <Content>
 
-      <main>
-        <Content>
+            <ButtonText title="Excluir nota"/>
 
-          <ButtonText title="Excluir nota"/>
+            <h1>
+              {data.title}
+            </h1>
 
-          <h1>
-            Introdução ao React
-          </h1>
+            <p>{data.description}</p>
 
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia porttitor nibh. Nam maximus ut lectus vel varius. Nunc lectus nulla, condimentum quis cursus nec, luctus vel tortor. Morbi rutrum, tellus et malesuada pulvinar, mi est accumsan magna, scelerisque scelerisque lectus lectus ac enim. Fusce feugiat risus non nisl lacinia vulputate. Fusce vehicula lacinia congue. Nam elementum quam sit amet odio lobortis, at vehicula ex imperdiet.</p>
+            {
+              data.links &&
+              <Section title="Links úteis">
+                <Links>
+                  {
+                    data.links.map(link => (
+                      <li key={String(link.id)}>
+                        <a href={link.url} target="_blank">
+                          {link.url}
+                        </a>
+                      </li> 
+                    ))
+                    
+                  }
+                     
+                </Links>
+              </Section>
+            }
 
-          <Section title="Links úteis">
-            <Links>
-              <li><a href="#">https://www.rocketseat.com.br/</a></li>          
-              <li><a href="#">https://www.rocketseat.com.br/</a></li>          
-            </Links>
-          </Section>
+            {
+              data.tags &&
+              <Section title="Marcadores">
+                {
+                  data.tags.map(tag => (
+                    <Tag 
+                      key={String(tag.id)}
+                      title={tag.name}
+                    />
+                  ))
+                }
+                
+              </Section>
+            }
+            
 
-          <Section title="Marcadores">
-            <Tag title="express"/>
-            <Tag title="nodejs"/>
-          </Section>
+            
 
-          <Button title="Voltar"/>
+            <Button 
+              title="Voltar" 
+              onClick={handleBack} 
+            />
+        
+          </Content>
+        </main>
+      }
       
-        </Content>
-      </main>
+
     </Container>
   )
 }
